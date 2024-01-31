@@ -1,2 +1,2 @@
-# todo-test
-vanilla js / todoList 1hour
+# Todo list test
+- vanilla js / todoList 1hour   
