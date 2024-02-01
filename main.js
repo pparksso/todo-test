@@ -3,8 +3,6 @@ const input = document.getElementById('input');
 const submitBtn = document.getElementById('submitBtn');
 const listBox = document.getElementById('list-box');
 const list = document.getElementById('list');
-let checkBoxes;
-
 const storageData = localStorage.getItem('todo');
 let todoArr = storageData ? JSON.parse(storageData) : [];
 
@@ -28,21 +26,26 @@ function getList() {
         list.innerHTML = ``;
         todoList.forEach((item, idx)=> {
            const li = document.createElement('li');
+           const label = document.createElement('label');
+           const checkBox = document.createElement('input');
+           const span = document.createElement('span');
+           const delBtn = document.createElement('button');
            li.id = 'item'+item.id;
+           label.htmlFor = 'c'+item.id;
+           checkBox.type = 'checkbox';
+           checkBox.id = 'c' + item.id;
+           checkBox.dataset.id = item.id;
+           checkBox.className = 'checkBox';
+           span.innerHTML = item.text;
+           delBtn.dataset.id = item.id;
+           delBtn.innerHTML = '삭제';
            list.appendChild(li);
-           li.innerHTML = `
-           <label for="c${item.id}">
-           ${
-            item.check ? `<input type="checkbox" id="c${item.id}" data-idx=${item.id} class="checkBox" checked />` : `<input type="checkbox" id="c${idx}" data-idx=${idx} class="checkBox" />`
-           }
-           <span>${item.text}</span>
-       </label>
-    <button data-idx=${item.id}>
-       삭제
-    </button>
-           `
+           li.appendChild(label);
+           label.appendChild(checkBox);
+           label.appendChild(span);
+           li.appendChild(delBtn);
+           checkBox.addEventListener('click', (e) => {changeChechVal(e)});
         });
-        checkBoxes = document.querySelectorAll('.checkBox');
         input.value = '';
     }
 }
